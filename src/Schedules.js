@@ -51,7 +51,7 @@ class ArticleList extends Component {
 
                             <ArticleItem article={article} addVoteUpToDOM = {this.addVoteUpToDOM}/>
                             {/* <h5><a href={"/articles/" + article._id}>{article.title}</a></h5>
-                       
+            
                         
                         <p><a href={"/topics/" + article.belongs_to._id + "/articles"}>{article.belongs_to.title}</a></p> */}
                         </div>
