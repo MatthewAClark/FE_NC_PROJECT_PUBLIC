@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Station from './Station'
 import NewStation from "./newStation"
+import Departures from "./departures"
 //import ListHeader from "./listHeader"
 
 class StationTable extends Component {
@@ -12,6 +13,7 @@ class StationTable extends Component {
         editClicked: false
     }
 
+    // load any stations from database on load
     componentDidMount() {
 
         //Display all stations from db on first load
@@ -30,10 +32,10 @@ class StationTable extends Component {
             })
     }
     // functions
+
+    // removes astation from the db
     deleteStation = (i) => {
-
-
-        const deleteStation = this.state.stations.filter((elem, index) => {
+        const deleteStation = this.state.stations.filter((elem, index) => { // return deleted station from stations array
             return (index !== i)
         })
 
@@ -52,17 +54,17 @@ class StationTable extends Component {
             })
     }
 
+    // add Station to db
     createStation = (event) => {
         event.preventDefault();
+
+
         // fetch new station from transportAPI
-
-
         fetch(`http://localhost:3000/api/live/station/${this.state.station_name}`)
             .then(res => {
                 return res.json();
             })
             .then(stationData => {
-                console.log(stationData)
 
                 // post new station to db
                 fetch(`http://localhost:3000/api/db/stations/`, {
@@ -76,6 +78,8 @@ class StationTable extends Component {
                 .then(res => {
                     return res.json();
                 })
+
+                // Add new station to DOM
                     .then(data => {
                        // if (res.status === 201) {
                             const newStations = this.state.stations.concat(data)
@@ -141,7 +145,13 @@ class StationTable extends Component {
                     <div className="stationItem">
                         {this.state.stations.map((station, i) => {
 
-                            return (<Station index={i} station_name={station.station_name} deleteStation={this.deleteStation} editHeader={this.editHeader} />)
+                            return (
+                                <div>
+                            <Station index={i} station_name={station.station_name} deleteStation={this.deleteStation} editHeader={this.editHeader} />
+               
+                            <Departures index={i} station_id={station.station_id}/>
+                            </div>
+                        )
                         })}
 
 
