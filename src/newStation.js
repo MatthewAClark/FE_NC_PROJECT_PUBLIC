@@ -4,7 +4,7 @@ const NewStation = (props) => {
     if (props.buttonClicked) {
         return (<form>
             <input type="text" onChange={props.handleStationName} name="stationname" size="40" placeholder="Station name" />
-            <input type="submit" value="add" name="addStation" onClick={props.createStation} />
+            <input type="submit" value="add" name="addStation" onClick={props.createRoute} />
             <button onClick={props.toggleButton}>Close</button>
         </form>
         )

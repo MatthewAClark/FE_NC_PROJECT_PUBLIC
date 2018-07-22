@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import ScheduleList from './scheduleList'
-import StationSelector from './stationSelector'
+// import ScheduleList from './scheduleList'
+import DepartureBoard from './departureBoard'
 //import Input from './input'
 
 class HomePage extends Component {
@@ -14,7 +14,10 @@ class HomePage extends Component {
         {/* <ScheduleList  /> */}
         {/* <ArticleList articleData={this.state.articleData} /> */}
         {/* <Input updateState={this.updateState}/> */}
-        <StationSelector/>
+        
+        {console.log(this.props.stations)}
+        <DepartureBoard stations={this.props.stations}/>
+        
         
         </div>
         )

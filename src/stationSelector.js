@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Station from './Station'
 import NewStation from "./newStation"
-import Departures from "./departures"
+import LiveDepartures from "./liveDepartures"
 //import ListHeader from "./listHeader"
 
 class StationTable extends Component {
@@ -9,50 +9,14 @@ class StationTable extends Component {
     // Stations list stored in state
     state = {
         station_name: '',
-        stations: [],
         editClicked: false
     }
 
     // load any stations from database on load
     componentDidMount() {
 
-        //Display all stations from db on first load
-        let fetchUrl;
-
-        fetchUrl = "http://localhost:3000/api/db/stations/"
-
-        fetch(fetchUrl)
-
-            .then(res => {
-                return res.json();
-            })
-            .then(body => {
-                this.setState({ stations: body })
-
-            })
     }
     // functions
-
-    // removes astation from the db
-    deleteStation = (i) => {
-        const deleteStation = this.state.stations.filter((elem, index) => { // return deleted station from stations array
-            return (index !== i)
-        })
-
-        const deleteStationDb = this.state.stations.find((elem, index) => {
-            console.log(index, )
-            return (index - 1 === 1)
-        })
-        console.log(deleteStationDb)
-        fetch(`http://localhost:3000/api/db/stations/${deleteStationDb.station_id}`, {
-            method: 'DELETE'
-        })
-            .then(res => {
-                this.setState({
-                    stations: deleteStation
-                })
-            })
-    }
 
     // add Station to db
     createStation = (event) => {
@@ -60,6 +24,7 @@ class StationTable extends Component {
 
 
         // fetch new station from transportAPI
+        
         fetch(`http://localhost:3000/api/live/station/${this.state.station_name}`)
             .then(res => {
                 return res.json();
@@ -79,13 +44,16 @@ class StationTable extends Component {
                     return res.json();
                 })
 
+
                 // Add new station to DOM
                     .then(data => {
-                       // if (res.status === 201) {
-                            const newStations = this.state.stations.concat(data)
-                            this.setState({
-                                stations: newStations
-                            })
+                    //     console.log(data)
+                    //    // if (res.status === 201) {
+                    //         const newStations = this.props.stations.concat(data)
+                    //         this.setState({
+                    //             stations: newStations
+                    this.props.addToDOMStation(data)
+                          // })
                        // }
                     })
 
@@ -143,13 +111,15 @@ class StationTable extends Component {
 
                     {/* Display current stations on table */}
                     <div className="stationItem">
-                        {this.state.stations.map((station, i) => {
+                    {console.log(this.props)}
+                        {this.props.stations.map((station, i) => {
 
                             return (
-                                <div>
-                            <Station index={i} station_name={station.station_name} deleteStation={this.deleteStation} editHeader={this.editHeader} />
+                                <div key={i}>
+                            <Station stations={this.props.stations}/>
+                           
                
-                            <Departures index={i} station_id={station.station_id}/>
+                           {/* <LiveDepartures index={i} station_id={station.station_id} station_code={station.station_code}/> */}
                             </div>
                         )
                         })}

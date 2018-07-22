@@ -1,24 +1,12 @@
-import React, { Component } from "react";
-//import StationHeader from "./stationHeader" 
-
-
-
-
+import React, {Component} from "react";
 
 class Departures extends Component {
 
-  state = {
+    state = {
+        departures: []
+    }
 
-    departures: ['test']
-  }
-
-
-  componentDidMount() {
-
-    //Display all stations from db on first load
-    let fetchUrl;
-
-    fetchUrl = "http://localhost:3000/api/db/stations/"
+    componentDidMount() {
 
 
     // fetch current time
@@ -26,63 +14,93 @@ class Departures extends Component {
     const dateTime = new Date(Date.now())
     const hours = dateTime.getHours()
     const minutes = dateTime.getMinutes()
-    //console.log(dateTime)
+    // const hours = 22
+    let hours_limit = hours + 2
+    if (hours > 21) hours_limit = 23
 
-    // fetch interested departures from db
-    console.log(this.props.station_id)
-    fetch(`http://localhost:3000/api/db/departures/all/${this.props.station_id}/?departure_time_from=${hours}:${minutes}&departure_time_to=${hours + 2}:${minutes}`)
+// fetch from schedules db
+
+fetch(`http://localhost:3000/api/db/schedules/route/${this.props.route_id}/?departure_time_from=${hours}:${minutes}&departure_time_to=${hours_limit}:${minutes}`)
 
       .then(res => {
+       
         if (res.status === 404) return []
         return res.json();
       })
       .then(body => {
-        console.log(body)
-        this.setState({ departures: body })
+     
+        this.setState({
+            departures: body
+        })
+        
+//         fetch(`http://localhost:3000/api/live/stationtimes/${this.props.station_code}`)
+//         .then(res => {
+//           console.log('test', res.status)
+//           if (res.status === 404) return []
+//           return res.json();
+//         })
+//         .then(live => {
+//          // this.setState({ departures: body })
+         
+//           // loop through departures
+//             console.log('db',this.state.departures, 'live',live)
 
-      })
+//          this.state.departures.forEach( (dep, index) => {
+//             const liveDeparture = live.departures.all.find(status => {
+              
+//               return (status.train_uid === dep.train_uid)
+//             })
+// if(liveDeparture !== undefined) {
+//             console.log(liveDeparture)
+//             const departureUpdate = this.state.departures
+//             departureUpdate[index].status = liveDeparture.status
+//             this.setState({departures: departureUpdate})
+//             if(liveDeparture.status === 'LATE') {
+
+//             }
+//             console.log(liveDeparture.status)
+//         }
+ // })
+         //console.log('departure data',depData)
+        })
+    //     .then(status => {
+      
+    //     })
+    //     .catch(err => console.log(err))
+        
+    //  })
+     // .catch(err => console.log(err))
   }
 
-  // Edit button for stations
-  editButton = (event) => {
-    this.setState({
-      editClicked: !this.state.editClicked
-    })
-  }
 
+    render() {
+        return (
 
-  render() {
-    //const station = (props) => {
-    return (
-      <div className="station">
-        <table>
-          <tr>
-            <td>Departing</td><td>For</td><td>Train Destination</td>
-          </tr>
-          {this.state.departures.map((departure, i) => {
+            <div>
 
-            return (
-              <tr>
-                <td>{departure.departure_time}</td><td>{departure.station_name}</td><td>{departure.train_arrival_destination}</td>
-              </tr>
-            )
-    
-          }
-          )}
-      </table>
-
-        {// Header of list
-
-
-          }<p>{this.props.station_name}</p>
-
-          {/* <StationHeader editButton={this.editButton} editClicked={this.state.editClicked} stationName={this.props.stationName} editHeader={this.props.editHeader} index={this.props.index}/> */}
-      </div>
-        );
-      }
+     
+                <table>
+                    
+                    <tbody>
+                 
+              
+            {this.state.departures.map((dep, i) => {
+                
+               return (
+                   
+               <tr key={i}> 
+               
+                   <td>{dep.departure_time}</td><td>{dep.train_arrival_destination}</td><td>{dep.status}</td>
+                   </tr>
+                   )
+            })}
+            </tbody>
+            </table>
+                </div>
+        )
     }
-    
-    
-    
-    
-export default Departures
+
+}
+
+
+export default Departures;
