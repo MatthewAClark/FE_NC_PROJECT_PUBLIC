@@ -27,6 +27,12 @@ class Station extends Component {
   .then(res => {
       return res.json();
   })
+  .then(route => {
+    const newRoutes = this.state.routes.concat(route)
+    this.setState({
+        routes: newRoutes
+    })
+  })
    
     }
 handleStationId = (event) => {
@@ -109,11 +115,11 @@ editButton = (event) => {
             {this.state.routes.map((route, i) => {
               return (
                 <div key={i}>
-               
+               {console.log(route)}
                 <div>{route.route_id}</div><div>{route.station_name}</div><div><button>Show times</button></div>
             
         
-            <Schedules route_id={route.route_id}/>
+            <Schedules route_id={route.route_id} station_code={this.state.station.station_code} dest_station_code={route.station_code}/>
             
             </div>
               )
