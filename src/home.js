@@ -8,14 +8,14 @@ class HomePage extends Component {
 
     render () {
         return (
-            <div>
-                homepage
+            <div class="panel">
+              
             
         {/* <ScheduleList  /> */}
         {/* <ArticleList articleData={this.state.articleData} /> */}
         {/* <Input updateState={this.updateState}/> */}
         
-        {console.log(this.props.stations)}
+        
         <DepartureBoard stations={this.props.stations}/>
         
         

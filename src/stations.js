@@ -1,19 +1,21 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import NewStation from './newStation';
 
+import { BrowserRouter, Route, Link } from "react-router-dom";
+
 //const StationManagement = (props) => {
- class StationManagement extends Component {
+class StationManagement extends Component {
 
     state = {
         buttonClicked: false
     }
 
-   createStation = (event) => {
+    createStation = (event) => {
         event.preventDefault();
 
 
         // fetch new station from transportAPI
-        
+
         fetch(`http://localhost:3000/api/live/station/${this.state.station_name}`)
             .then(res => {
                 return res.json();
@@ -29,20 +31,20 @@ import NewStation from './newStation';
                         station_code: stationData.member[0].station_code
                     })
                 })
-                .then(res => {
-                    return res.json();
-                })
+                    .then(res => {
+                        return res.json();
+                    })
 
 
-                // Add new station to DOM
+                    // Add new station to DOM
                     .then(data => {
-                                                    
-                    this.props.addToDOMStation(data)
-                          
+
+                        this.props.addToDOMStation(data)
+
                     })
 
             })
-        }
+    }
     handleStationName = (event) => {
         const station_name = event.target.value
         this.setState({
@@ -79,30 +81,33 @@ import NewStation from './newStation';
 
     render() {
         return (
-            <div>
-                <h1>Station Management</h1>
-         <h3>Stations</h3>
-{console.log(this.props.stations)}
-    
-        {this.props.stations.map( (station, i) => {
-            return(
-         <div key={i}>
-         {station.station_name}
-           {/* <StationItem/>          */}
-          <button>Manage Station</button>
-          </div>)
-        })}
-      <NewStation handleStationName={this.handleStationName} createStation={this.createStation} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton} /> 
+           
+                <div class="card">
+                    <h1 class="title is-2">Station Management</h1>
+                    <h3 class="title is-3">Stations</h3>
+                
 
-   </div>
-    )
-       }
-       
+                    {this.props.stations.map((station, i) => {
+                        return (
+                            <div  class="tag is-large" key={i}>
+                                <Link to={`/stations/${station.station_id}`}>{station.station_name}</Link>
+                                {/* <StationItem/>          */}
+                                
+                            </div>)
+                    })}
+                    <div>
+                    <NewStation handleStationName={this.handleStationName} createStation={this.createStation} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton} />
+</div>
+                </div>
+           
+        )
+    }
+
 
 }
 
 
- 
+
 
 
 export default StationManagement;

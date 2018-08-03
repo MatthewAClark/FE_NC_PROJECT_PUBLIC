@@ -1,8 +1,12 @@
-div {
+/* div {
     border: 2pt solid black;
 }
 
 table {
     margin: auto;
     width: 100%;
+} */
+
+.departureItem {
+    background-color: lightblue;
 }

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Schedules from "./schedules";
 import AddRoute from './addRoute';
+import { BrowserRouter, Route, Link } from "react-router-dom";
+
 
 
 class Station extends Component {
@@ -99,7 +101,8 @@ editButton = (event) => {
     console.log(this.state.routes)
     return (
       <div>
-        <table>
+        <h1 class="title is-2">{this.state.station.station_name}</h1>
+        {/* <table>
           <tbody>
             <tr>
               <td>station Id</td><td>Station Name</td><td>Station code</td><td>station user type</td>
@@ -108,7 +111,7 @@ editButton = (event) => {
               <td>{this.state.station.station_id}</td><td>{this.state.station.station_name}</td><td>{this.state.station.station_code}</td><td>{this.state.station.user_station_type}</td>
             </tr>
           </tbody>
-        </table>
+        </table> */}
 
 
  
@@ -116,9 +119,11 @@ editButton = (event) => {
               return (
                 <div key={i}>
                {console.log(route)}
-                <div>{route.route_id}</div><div>{route.station_name}</div><div><button>Show times</button></div>
+                <h2 class="title is-3">to {route.station_name}</h2><div>
+                  {/* <button>Show times</button> */}
+                  </div>
             
-        
+                  {/* <Link to={`/stations/${this.state.station.station_id}/schedules`}>Fetch New Schedules</Link> */}
             <Schedules route_id={route.route_id} station_code={this.state.station.station_code} dest_station_code={route.station_code}/>
             
             </div>

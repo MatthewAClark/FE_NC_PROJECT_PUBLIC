@@ -9,16 +9,14 @@ const DepartureBoard = (props) => {
 
 //    render() {
         return (
-            <div>
-         <h2>Departures</h2>
+            <div class="">
+         <h2 class="title is-2">Departures</h2>
 
     
         {props.stations.map( (station, i) => {
             return(
          <div key={i}>
-          {console.log(i)}
-
-          
+     
           <DepartureItem station={station} />
           </div>)
         })}
