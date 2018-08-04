@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 class Station extends Component {
 
   state = {
-    station_id : 0,
+    station_id: 0,
     routes: [],
     station: [],
     editClicked: false
@@ -17,59 +17,82 @@ class Station extends Component {
   createRoute = (event) => {
     event.preventDefault();
 
-   
+
     fetch(`http://localhost:3000/api/db/routes/`, {
       headers: new Headers({ "Content-Type": "application/json" }),
       method: 'POST',
       body: JSON.stringify({
-          starting_station: this.props.match.params.station_id,
-          finish_station: this.state.station_id
+        starting_station: this.props.match.params.station_id,
+        finish_station: this.state.station_id
       })
-  })
-  .then(res => {
-      return res.json();
-  })
-  .then(route => {
-    const newRoutes = this.state.routes.concat(route)
-    this.setState({
-        routes: newRoutes
     })
-  })
-   
-    }
-handleStationId = (event) => {
-    const station_id= event.target.value
+      .then(res => {
+        return res.json();
+      })
+      .then(route => {
+        // Find station from station list
+        route = {
+          station_code: this.props.stations.find(elem => {
+            return (elem.station_id === route.finish_station)
+          }).station_code,
+          station_name: this.props.stations.find(elem => {
+            return (elem.station_id === route.finish_station)
+          }).station_name,
+          route
+        }
+
+        const newRoutes = this.state.routes.concat(route)
+
+
+        this.setState({
+          routes: newRoutes
+        })
+        console.log(this.state.routes)
+      })
+
+  }
+
+  handleStationId = (event) => {
+    const station_id = event.target.value
     this.setState({
-        station_id
+      station_id
     })
 
-}
+  }
 
-// editHeader for Station component
-editHeader = (text, index) => {
+  // editHeader for Station component
+  editHeader = (text, index) => {
     const { stations } = this.state
     const newStations = [...stations]
     newStations[index].stationName = text
     this.setState({
-        lists: newStations
+      lists: newStations
     }, () => {
-        console.log('state updated')
+      console.log('state updated')
     })
-}
+  }
 
-// Toggle button for stations
-toggleButton = (event) => {
+  // Toggle button for stations
+  toggleButton = (event) => {
     this.setState({
-        buttonClicked: !this.state.buttonClicked
+      buttonClicked: !this.state.buttonClicked
     })
-}
+  }
 
-// Edit button for lists
-editButton = (event) => {
+  // Edit button for lists
+  editButton = (event) => {
     this.setState({
-        editClicked: !this.state.editClicked
+      editClicked: !this.state.editClicked
     })
-}
+  }
+
+  addToDOMRoute = (data) => {
+    // if (res.status === 201) {
+    const newRoutes = this.state.routes.concat(data)
+    this.setState({
+      routes: newRoutes
+    })
+  }
 
 
   componentDidMount() {
@@ -114,23 +137,23 @@ editButton = (event) => {
         </table> */}
 
 
- 
-            {this.state.routes.map((route, i) => {
-              return (
-                <div key={i}>
-               {console.log(route)}
-                <h2 class="title is-3">to {route.station_name}</h2><div>
-                  {/* <button>Show times</button> */}
-                  </div>
-            
-                  {/* <Link to={`/stations/${this.state.station.station_id}/schedules`}>Fetch New Schedules</Link> */}
-            <Schedules route_id={route.route_id} station_code={this.state.station.station_code} dest_station_code={route.station_code}/>
-            
+
+        {this.state.routes.map((route, i) => {
+          return (
+            <div key={i}>
+              {console.log(route)}
+              <h2 class="title is-3">to {route.station_name}</h2><div>
+                {/* <button>Show times</button> */}
+              </div>
+
+              {/* <Link to={`/stations/${this.state.station.station_id}/schedules`}>Fetch New Schedules</Link> */}
+              <Schedules route_id={route.route_id} station_code={this.state.station.station_code} dest_station_code={route.station_code} />
+
             </div>
-              )
-            })}
-            <AddRoute stations={this.props.stations} currentStation={this.state.station.station_id} handleStationId={this.handleStationId} createRoute={this.createRoute} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton}/>
-         
+          )
+        })}
+        <AddRoute stations={this.props.stations} currentStation={this.state.station.station_id} handleStationId={this.handleStationId} createRoute={this.createRoute} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton} />
+
       </div>
     )
   }
