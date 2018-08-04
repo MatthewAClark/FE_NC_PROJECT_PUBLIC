@@ -10,7 +10,7 @@ class Station extends Component {
   state = {
     station_id: 0,
     routes: [],
-    station: [],
+    station: {station_name:'Frex'},
     editClicked: false
   }
 
@@ -86,13 +86,6 @@ class Station extends Component {
     })
   }
 
-  addToDOMRoute = (data) => {
-    // if (res.status === 201) {
-    const newRoutes = this.state.routes.concat(data)
-    this.setState({
-      routes: newRoutes
-    })
-  }
 
 
   componentDidMount() {
@@ -105,6 +98,16 @@ class Station extends Component {
           station: stationData
         })
       })
+   
+
+    
+  
+
+  
+ 
+  // console.log(this.state.station)
+
+
     fetch(`http://localhost:3000/api/db/routes/start/${this.props.match.params.station_id}`)
       .then(res => {
         return res.json();
@@ -119,9 +122,15 @@ class Station extends Component {
   }
 
 
+  
+
+
+
 
   render() {
-    console.log(this.state.routes)
+   
+     
+     
     return (
       <div>
         <h1 class="title is-2">{this.state.station.station_name}</h1>
@@ -147,6 +156,7 @@ class Station extends Component {
               </div>
 
               {/* <Link to={`/stations/${this.state.station.station_id}/schedules`}>Fetch New Schedules</Link> */}
+              
               <Schedules route_id={route.route_id} station_code={this.state.station.station_code} dest_station_code={route.station_code} />
 
             </div>

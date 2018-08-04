@@ -11,31 +11,54 @@ import 'bulma/css/bulma.css'
 class App extends Component {
   state = {
     stations: []
+    
   }
 
 
-// Fetch all stations from backend DB
+  // Fetch all stations from backend DB
   componentDidMount() {
-    //Display all stations from db on first load
+    // Display all stations from db on first load
     let fetchUrl;
+    console.log('compononetDidmoutn within app')
     fetchUrl = "http://localhost:3000/api/db/stations/"
     fetch(fetchUrl)
-        .then(res => {
-            return res.json();
-        })
-        .then(body => {
-            this.setState({ stations: body })
-        })
-}
+      .then(res => {
+        return res.json();
+      })
+      .then(body => {
+        this.setState({ stations: body })
+      })
+      fetch(`http://localhost:3000/api/db/schedules/all`)
+      .then(res => {
+        return res.json();
+      })
+      .then(body => {
+        this.setState({ schedules: body })
+      })
 
+  }
 
-// Update state with new station added
+  // fetchAllStations() {
+
+  //   let fetchUrl;
+  //   console.log('compononetDidmoutn within app')
+  //   fetchUrl = "http://localhost:3000/api/db/stations/"
+  //   fetch(fetchUrl)
+  //     .then(res => {
+  //       return res.json();
+  //     })
+  //     .then(body => {
+  //       this.setState({ stations: body })
+  //     })
+  // }
+
+  // Update state with new station added
   addToDOMStation = (data) => {
-   // if (res.status === 201) {
-         const newStations = this.state.stations.concat(data)
-         this.setState({
-             stations: newStations
-         })
+    // if (res.status === 201) {
+    const newStations = this.state.stations.concat(data)
+    this.setState({
+      stations: newStations
+    })
   }
 
   // fetchAllStations = () => {
@@ -50,7 +73,7 @@ class App extends Component {
   //     })
   //     .then(body => {
   //       this.setState({ stations: body })
-        
+
   //     })
   // }
 
@@ -60,34 +83,34 @@ class App extends Component {
       < BrowserRouter>
         <div>
           <header>
-            <section class="hero is-primary">
-            <div class="hero-body">
-            <div class="container">
-            <h1 class="title">Personal Train App</h1>
-            <nav class="navbar">
-              <Link class="navbar-item" to="/">Home</Link>
-              <Link class="navbar-item" to="/stations">Station Management</Link>
-              </nav>
+            <section className="hero is-primary">
+              <div className="hero-body">
+                <div className="container">
+                  <h1 className="title">Personal Train App</h1>
+                  <nav className="navbar">
+                    <Link className="navbar-item" to="/">Home</Link>
+                    <Link className="navbar-item" to="/stations">Station Management</Link>
+                  </nav>
+                </div>
               </div>
-              </div>
-              </section>
+            </section>
           </header>
 
-{/*Home page which displays departures*/}
+          {/*Home page which displays departures*/}
 
           <Route exact path="/" render={(props) => (
-          <HomePage {...props} stations={this.state.stations}/> )}/>
+            <HomePage {...props} stations={this.state.stations} />)} />
 
           <Route exact path="/stations" render={(props) => (
-          <StationManagement {...props} stations={this.state.stations} addToDOMStation={this.addToDOMStation}/> )}/>
+            <StationManagement {...props} stations={this.state.stations} addToDOMStation={this.addToDOMStation} />)} />
 
-          <Route path="/stations/:station_id/schedules/" render={(props) => (<Schedules route_id={this.props.route.route_id} station_code={this.state.station.station_code} dest_station_code={this.props.route.station_code}/>)}/>
+          <Route path="/stations/:station_id/schedules/" render={(props) => (<Schedules route_id={this.props.route.route_id} station_code={this.state.station.station_code} dest_station_code={this.props.route.station_code} />)} />
 
           {/* <Route exact path="/stations/:station_id" render={(props) => (
           <Station {...props} stations={this.state.stations}/> )}/> */}
 
-  <Route exact path="/stations/:station_id" render={(props) => (
-          <Station {...props} stations={this.state.stations} /> )}/>
+          <Route exact path="/stations/:station_id" render={(props) => (
+            <Station {...props} stations={this.state.stations} />)} />
 
         </div>
       </ BrowserRouter>
