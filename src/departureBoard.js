@@ -14,9 +14,9 @@ class DepartureBoard extends Component {
         // fetch current time
         new Date().getTime();
         const dateTime = new Date(Date.now())
-        //const hours = dateTime.getHours()
+        const hours = dateTime.getHours()
         const minutes = dateTime.getMinutes()
-         const hours = 13
+        // const hours = 13
         let hours_limit = hours + 2
         if (hours > 21) hours_limit = 23
         // Display all stations from db on first load
@@ -42,13 +42,10 @@ class DepartureBoard extends Component {
                 const endIds = []
                 const routeIds = []
                 schedules.forEach(elem => {
-                    if (startIds.indexOf(elem.starting_station) === -1) {
-                        startIds.push(elem.starting_station)
-                    }
-                    if (endIds.indexOf(elem.finish_station) === -1) {
-                        endIds.push(elem.finish_station)
-                    }
+              
                     if (routeIds.indexOf(elem.route_id) === -1) {
+                        startIds.push(elem.starting_station)
+                        endIds.push(elem.finish_station)
                         routeIds.push(elem.route_id)
                     }
                 })
@@ -56,15 +53,17 @@ class DepartureBoard extends Component {
                 // 
                 const routes = []
                 for (let i = 0; i < routeIds.length; i++) {
-                    
+                    console.log(startIds, endIds, routeIds)
                     routes.push({
                         starting_station: allStations.find(elem => {
                         return (elem.station_id === startIds[i])}),
 
                         finish_station: allStations.find(elem => {
+                            console.log(elem.station_id, endIds[i])
                             return (elem.station_id === endIds[i])}),
 
                             departures: schedules.filter(elem => {
+                                console.log(routeIds[i])
                                 return (elem.route_id === routeIds[i])
                             })
                         })

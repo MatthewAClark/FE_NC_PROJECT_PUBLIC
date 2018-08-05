@@ -145,6 +145,7 @@ editButton = (event) => {
 }
 
 addSchedule = (index) => {
+    console.log(this.props.route_id)
     fetch(`http://localhost:3000/api/db/schedules/`, {
         headers: new Headers({ "Content-Type": "application/json" }),
         method: 'POST',
@@ -155,8 +156,8 @@ addSchedule = (index) => {
             "arrival_time": this.state.schedules[index].arrival_time,
             "departure_time": this.state.schedules[index].departure_time,
             "train_operator": this.state.schedules[index].train_operator,
-            "route_id": this.state.schedules[index].route_id
-        })
+            "route_id": this.props.route_id
+        })  
     })
     .then(result => {
         const tempSchedules = this.state.schedules

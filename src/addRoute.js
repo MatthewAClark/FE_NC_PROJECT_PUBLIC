@@ -9,8 +9,9 @@ const NewRoute = (props) => {
             {/* <input type="text" onChange={props.handleStationName} name="stationname" size="40" placeholder="Station name" /> */}
             <input type="submit" value="add" name="addStation" onClick={props.createRoute} />
             
-            
+            {/* Look into bug */}
                     <select name="station" onChange={props.handleStationId}>
+                    <option value="Station">Station</option>
 
                     {props.stations.filter(elem => {
                         return (elem.station_id !== props.currentStation)

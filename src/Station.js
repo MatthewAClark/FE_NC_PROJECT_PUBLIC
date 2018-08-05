@@ -38,11 +38,13 @@ class Station extends Component {
           station_name: this.props.stations.find(elem => {
             return (elem.station_id === route.finish_station)
           }).station_name,
-          route
+          finish_station: route.finish_station,
+          starting_station: route.starting_station,
+          route_id: route.route_id 
         }
 
         const newRoutes = this.state.routes.concat(route)
-
+        console.log(newRoutes)
 
         this.setState({
           routes: newRoutes
@@ -53,9 +55,10 @@ class Station extends Component {
   }
 
   handleStationId = (event) => {
+    console.log('FFS')
     const station_id = event.target.value
     this.setState({
-      station_id
+      station_id : station_id
     })
 
   }
@@ -156,7 +159,7 @@ class Station extends Component {
               </div>
 
               {/* <Link to={`/stations/${this.state.station.station_id}/schedules`}>Fetch New Schedules</Link> */}
-              
+              {console.log(route.route_id)}
               <Schedules route_id={route.route_id} station_code={this.state.station.station_code} dest_station_code={route.station_code} />
 
             </div>

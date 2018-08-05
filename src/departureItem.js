@@ -34,7 +34,7 @@ class DepartureItem extends Component {
        // if (this.state.routes.length > 0) {
             return (
                 <div class="card departureItem">
- {console.log(this.props.station)}
+ {console.log(this.props.route)}
                     <h4 class="title is-4">{this.props.route.starting_station.station_name} to {this.props.route.finish_station.station_name}</h4>
 
                      <div class="card">

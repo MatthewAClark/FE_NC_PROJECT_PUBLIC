@@ -4,6 +4,7 @@ import HomePage from './home'
 import StationManagement from './stations'
 import Schedules from './schedules'
 import Station from './Station'
+import Delays from './Delays'
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import 'bulma/css/bulma.css'
 
@@ -90,6 +91,7 @@ class App extends Component {
                   <nav className="navbar">
                     <Link className="navbar-item" to="/">Home</Link>
                     <Link className="navbar-item" to="/stations">Station Management</Link>
+                    <Link className="navbar-item" to="/delays">Train Performance</Link>
                   </nav>
                 </div>
               </div>
@@ -105,6 +107,8 @@ class App extends Component {
             <StationManagement {...props} stations={this.state.stations} addToDOMStation={this.addToDOMStation} />)} />
 
           <Route path="/stations/:station_id/schedules/" render={(props) => (<Schedules route_id={this.props.route.route_id} station_code={this.state.station.station_code} dest_station_code={this.props.route.station_code} />)} />
+
+                 <Route path="/delays/" render={(props) => (<Delays stations={this.state.stations}/>)} />
 
           {/* <Route exact path="/stations/:station_id" render={(props) => (
           <Station {...props} stations={this.state.stations}/> )}/> */}
