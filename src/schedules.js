@@ -5,7 +5,7 @@ class Schedules extends Component {
 
     state = {
         fromTime: '',
-        toTime: '',
+        offset: '',
         date: '',
         schedules: []
     }
@@ -42,7 +42,7 @@ createSchedule = (event) => {
     event.preventDefault();
 
    console.log(this.props.station_code)
-    fetch(`http://localhost:3000/api/live/station/route/${this.props.station_code}?destination=${this.props.dest_station_code}`, {
+    fetch(`http://localhost:3000/api/live/station/route/?station_from=${this.props.station_code}&station_to=${this.props.dest_station_code}&date=${this.state.date}&time=${this.state.fromTime}&offset=${this.state.offset}`, {
      
   })
   .then(res => {
@@ -103,9 +103,9 @@ handleFromDepartureTime = (event) => {
 }
 
 handleToDepartureTime = (event) => {
-    const toTime= event.target.value
+    const offset= event.target.value
     this.setState({
-       toTime
+       offset
     })
 
 }

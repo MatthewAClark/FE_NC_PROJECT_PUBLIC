@@ -78,13 +78,11 @@ class Departures extends Component {
             return (
                 
                             
-                                    <tr >
-                                        <td>{this.props.departure.departure_time}</td><td>{this.props.departure.train_arrival_destination}</td><td>{this.props.departure.status}</td>
-                                    </tr>
+                                  
                                 
                             
                         
-            )
+           <div></div> )
         // } else {
         //     return (<p>No schedules set up for this station</p>)
         // }

@@ -55,7 +55,6 @@ class Station extends Component {
   }
 
   handleStationId = (event) => {
-    console.log('FFS')
     const station_id = event.target.value
     this.setState({
       station_id : station_id
