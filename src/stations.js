@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NewStation from './newStation';
 
+import fetchUrl from './apiConfig';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 //const StationManagement = (props) => {
@@ -16,14 +17,14 @@ class StationManagement extends Component {
 
         // fetch new station from transportAPI
 
-        fetch(`http://localhost:3000/api/live/station/${this.state.station_name}`)
+        fetch(`${fetchUrl.liveStation}/${this.state.station_name}`)
             .then(res => {
                 return res.json();
             })
             .then(stationData => {
 
                 // post new station to db
-                fetch(`http://localhost:3000/api/db/stations/`, {
+                fetch(fetchUrl.postStation, {
                     headers: new Headers({ "Content-Type": "application/json" }),
                     method: 'POST',
                     body: JSON.stringify({

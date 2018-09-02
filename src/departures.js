@@ -83,9 +83,7 @@ class Departures extends Component {
                             
                         
            <div></div> )
-        // } else {
-        //     return (<p>No schedules set up for this station</p>)
-        // }
+
     }
 
 }

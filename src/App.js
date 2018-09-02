@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import ArticlePage from './articlePage'
 import HomePage from './home'
 import StationManagement from './stations'
 import Schedules from './schedules'
@@ -7,29 +6,28 @@ import Station from './Station'
 import Delays from './Delays'
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import 'bulma/css/bulma.css'
+import fetchUrl from './apiConfig'
 
+// All railway stations are loaded at App level
 // Load stations state - accessable to all components
 class App extends Component {
   state = {
-    stations: []
-    
+    stations: [] 
   }
-
 
   // Fetch all stations from backend DB
   componentDidMount() {
     // Display all stations from db on first load
-    let fetchUrl;
-    console.log('compononetDidmoutn within app')
-    fetchUrl = "http://localhost:3000/api/db/stations/"
-    fetch(fetchUrl)
+   
+   
+   fetch(fetchUrl.stations)
       .then(res => {
         return res.json();
       })
       .then(body => {
         this.setState({ stations: body })
       })
-      fetch(`http://localhost:3000/api/db/schedules/all`)
+      fetch(fetchUrl.allSchedules)
       .then(res => {
         return res.json();
       })
@@ -39,19 +37,6 @@ class App extends Component {
 
   }
 
-  // fetchAllStations() {
-
-  //   let fetchUrl;
-  //   console.log('compononetDidmoutn within app')
-  //   fetchUrl = "http://localhost:3000/api/db/stations/"
-  //   fetch(fetchUrl)
-  //     .then(res => {
-  //       return res.json();
-  //     })
-  //     .then(body => {
-  //       this.setState({ stations: body })
-  //     })
-  // }
 
   // Update state with new station added
   addToDOMStation = (data) => {
@@ -62,28 +47,14 @@ class App extends Component {
     })
   }
 
-  // fetchAllStations = () => {
-  //   let fetchUrl;
-
-  //   fetchUrl = "http://localhost:3000/api/db/stations/"
-
-  //   fetch(fetchUrl)
-
-  //     .then(res => {
-  //       return res.json();
-  //     })
-  //     .then(body => {
-  //       this.setState({ stations: body })
-
-  //     })
-  // }
-
 
   render() {
     return (
       < BrowserRouter>
         <div>
           <header>
+
+            {/* Navbar section */}
             <section className="hero is-primary">
               <div className="hero-body">
                 <div className="container">
@@ -110,8 +81,7 @@ class App extends Component {
 
                  <Route path="/delays/" render={(props) => (<Delays stations={this.state.stations}/>)} />
 
-          {/* <Route exact path="/stations/:station_id" render={(props) => (
-          <Station {...props} stations={this.state.stations}/> )}/> */}
+
 
           <Route exact path="/stations/:station_id" render={(props) => (
             <Station {...props} stations={this.state.stations} />)} />

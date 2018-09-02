@@ -1,41 +1,14 @@
 import React, { Component } from "react";
-import Departures from './departures'
 
 
-class DepartureItem extends Component {
+const DepartureItem = (props) => {
+//class DepartureItem extends Component {
 
-//     state = {
-//         stationData: []
-//     }
-
-//     componentDidMount() {
-
-//         //Display all stations from db on first load
-//         let fetchUrl;
-//       //  Fetch all routes
-//         fetchUrl = `http://localhost:3000/api/db/routes/start/${this.props.routeItem.route_id}`
-
-//         fetch(fetchUrl)
-
-//             .then(res => {
-//                 return res.json();
-//             })
-//             .then(body => {
-//                 console.log(body)
-//                 this.setState({ stationData: body })
-// console.log(this.props.routeItem)
-//             })
-
-//     }
-
-
-
-    render() {
-       // if (this.state.routes.length > 0) {
+  //  render() {
             return (
                 <div class="card departureItem">
- {console.log(this.props.route)}
-                    <h4 class="title is-4">{this.props.route.starting_station.station_name} to {this.props.route.finish_station.station_name}</h4>
+ 
+                    <h4 class="title is-4">{props.route.starting_station.station_name} to {props.route.finish_station.station_name}</h4>
 
                      <div class="card">
                     <table class="table">
@@ -44,7 +17,7 @@ class DepartureItem extends Component {
                             <tr>
                                 <td>Departure time</td><td>Train Destination</td><td>Status</td>
                             </tr>
-                    {this.props.route.departures.map((departure, i) => {
+                    {props.route.departures.map((departure, i) => {
                         return (
                             
                            
@@ -61,8 +34,8 @@ class DepartureItem extends Component {
                             </div>
                 
             )
-      //  } else return (<div></div>)
-    }
+   
+//    }
 
 
 }

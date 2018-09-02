@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 //import StationHeader from "./stationHeader" 
-
-
-
-
+import fetchUrl from './apiConfig'
 
 class Delays extends Component {
 
@@ -16,18 +13,16 @@ class Delays extends Component {
 
 
     componentDidMount() {
-
-
-
-        fetch(`http://localhost:3000/api/db/delays/schedules`)
+        // Fetch the train performances
+        fetch(fetchUrl.delaySchedules)
 
             .then(res => {
-                console.log('test', res.status)
+                
                 if (res.status === 404) return []
                 return res.json();
             })
             .then(body => {
-                console.log(body)
+              
 
                 const train_operator = {}
                 const routes = {}
@@ -71,44 +66,13 @@ class Delays extends Component {
                     
                 })
 
-                //     fetch(`http://localhost:3000/api/live/stationtimes/${this.props.station_code}`)
-                //     .then(res => {
-                //       console.log('test', res.status)
-                //       if (res.status === 404) return []
-                //       return res.json();
-                //     })
-                //     .then(live => {
-                //       this.setState({ departures: body })
-                //       console.log(live)
-                //       // loop through departures
-                //       body.forEach( (dep, index) => {
-                //         const liveDeparture = live.departures.all.find(status => {
-                //           console.log('train studd', status.train_uid, dep.train_uid)
-                //           return (status.train_uid === dep.train_uid)
-                //         })
-                //         const departureUpdate = this.state.departures
-                //         departureUpdate[index].status = liveDeparture.status
-                //         this.setState({departures: departureUpdate})
-                //         if(liveDeparture.status === 'LATE') {
 
-                //         }
-
-                //       })
-                //     //  console.log('departure data',depData)
-                //     })
-                //     .catch(err => console.log(err))
-
-                //   })
-                //   .catch(err => console.log(err))
             })
     }
 
 
-
-
-
     render() {
-        //const station = (props) => {
+      
         return (
             <div className="delays">
                 <h2 class="title is-2">Train Performance</h2>
@@ -149,25 +113,15 @@ class Delays extends Component {
                     return (
                         
                         <tr key={i}>
-                            {console.log(this.props.stations.find(station => (route.start_id === station.station_id)).station_name)}
+                           
                      <td>{this.props.stations.find(station => (route.start_id === station.station_id)).station_name} to<br/>{this.props.stations.find(station => (route.finish_id === station.station_id)).station_name}</td><td>{route.early}</td><td>{route.on_time}</td><td>{route.late}</td><td>{route.cancelled}</td>
                      </tr>
                     )}
                 })}
-
-        
+      
 
             </tbody>
             </table>
-
-
-
-
-
-
-
-
-
 
 
             </div>

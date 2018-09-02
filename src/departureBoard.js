@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DepartureItem from './departureItem'
+import fetchUrl from './apiConfig'
 
 
 //const DepartureBoard = (props) => {
@@ -17,27 +18,30 @@ class DepartureBoard extends Component {
         const hours = dateTime.getHours()
         const minutes = dateTime.getMinutes()
         // const hours = 13
+
+        // Fetch a window of schedules consisting of 2 hours worth of departures
         let hours_limit = hours + 2
+
+        // so we don't overshoot over 24 hours
         if (hours > 21) hours_limit = 23
-        // Display all stations from db on first load
-        let fetchUrl;
-        // console.log('compononetDidmoutn within app')
-        fetchUrl = `http://localhost:3000/api/db/schedules/time/routes/?from=${hours}:${minutes}&to=${hours_limit}:${minutes}`
-        fetch(fetchUrl)
+
+        // Display all routes over the next 2 hours from db on first load
+         
+        fetch(`${fetchUrl.routes}/?from=${hours}:${minutes}&to=${hours_limit}:${minutes}`)
             .then(res => {
                 return res.json();
             })
             .then(schedules => {
-                let fetchUrl
-                  fetchUrl = `http://localhost:3000/api/db/stations/`
-                  fetch(fetchUrl)
+                
+                  fetch(fetchUrl.stations)
                     .then(res => {
                         return res.json();
                     })
                     .then(allStations => {
 
-                // Group schedules by route ID
-               // const ids = {}
+                // Group schedules by route ID. Get the start and end stations from table so we can display it in the browser
+  
+                        // Store the start and end station IDs in 2 arrays
                 const startIds = []
                 const endIds = []
                 const routeIds = []
@@ -50,32 +54,27 @@ class DepartureBoard extends Component {
                     }
                 })
 
-                // 
+                // Find the starting and finish stations from the db fetched earlier and match them to the routes
                 const routes = []
                 for (let i = 0; i < routeIds.length; i++) {
-                    console.log(startIds, endIds, routeIds)
                     routes.push({
                         starting_station: allStations.find(elem => {
                         return (elem.station_id === startIds[i])}),
 
                         finish_station: allStations.find(elem => {
-                            console.log(elem.station_id, endIds[i])
+                           
                             return (elem.station_id === endIds[i])}),
 
                             departures: schedules.filter(elem => {
-                                console.log(routeIds[i])
+                               
                                 return (elem.route_id === routeIds[i])
                             })
                         })
                   
-                   // })
-                
                 }
-                console.log(routes)
+             
                 this.setState({ routes: routes })
 
-                // Fetch all stations
-         
                     })
             })
 
@@ -85,14 +84,6 @@ class DepartureBoard extends Component {
 
     render() {
 
-
-
-        // let indexSort=0
-        // while(indexSort)
-        // scheduleItems.push(this.state.schedules.filter(elem =>{
-        //     return (this.state.schedules[indexSort].route_id === elem.route_id)
-        // }))
-        // indexSort=scheduleItems.length
         if (this.state.routes.length > 0) {
 
 
@@ -103,7 +94,7 @@ class DepartureBoard extends Component {
 
                         return (
                             <div key={i}>
-{console.log(route)}
+
                                 <DepartureItem route={route} />
                             </div>
                         )

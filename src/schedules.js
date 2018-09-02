@@ -1,17 +1,19 @@
 import React, {Component} from "react";
 import AddNewTimes from "./addNewTimes";
+import fetchUrl from "./apiConfig";
 
 class Schedules extends Component {
 
     state = {
         fromTime: '',
-        offset: '',
+        offset: '05:00',
         date: '',
         schedules: []
     }
 
 componentDidMount() {
-    fetch(`http://localhost:3000/api/db/schedules/route/${this.props.route_id}`)
+   
+    fetch(`${fetchUrl.route}${this.props.route_id}`)
 
       .then(res => {
        
@@ -34,15 +36,12 @@ componentDidMount() {
         this.setState({
             schedules: body
         })
-        console.log(body)
     })
 }
 
 createSchedule = (event) => {
     event.preventDefault();
-
-   console.log(this.props.station_code)
-    fetch(`http://localhost:3000/api/live/station/route/?station_from=${this.props.station_code}&station_to=${this.props.dest_station_code}&date=${this.state.date}&time=${this.state.fromTime}&offset=${this.state.offset}`, {
+    fetch(`${fetchUrl.liveRoute}?station_from=${this.props.station_code}&station_to=${this.props.dest_station_code}&date=${this.state.date}&time=${this.state.fromTime}&offset=${this.state.offset}`, {
      
   })
   .then(res => {
@@ -145,8 +144,8 @@ editButton = (event) => {
 }
 
 addSchedule = (index) => {
-    console.log(this.props.route_id)
-    fetch(`http://localhost:3000/api/db/schedules/`, {
+    
+    fetch(fetchUrl.postSchedule, {
         headers: new Headers({ "Content-Type": "application/json" }),
         method: 'POST',
         body: JSON.stringify({
@@ -166,7 +165,7 @@ addSchedule = (index) => {
             schedules: tempSchedules
         })
     })
-   // console.log(this.state.schedules[index])
+   
 
 }
 
