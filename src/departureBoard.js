@@ -26,56 +26,115 @@ class DepartureBoard extends Component {
         if (hours > 21) hours_limit = 23
 
         // Display all routes over the next 2 hours from db on first load
-         
+
         fetch(`${fetchUrl.routes}/?from=${hours}:${minutes}&to=${hours_limit}:${minutes}`)
             .then(res => {
                 return res.json();
             })
             .then(schedules => {
-                
-                  fetch(fetchUrl.stations)
+
+                fetch(fetchUrl.stations)
                     .then(res => {
                         return res.json();
                     })
                     .then(allStations => {
 
-                // Group schedules by route ID. Get the start and end stations from table so we can display it in the browser
-  
+                        // Group schedules by route ID. Get the start and end stations from table so we can display it in the browser
+
                         // Store the start and end station IDs in 2 arrays
-                const startIds = []
-                const endIds = []
-                const routeIds = []
-                schedules.forEach(elem => {
-              
-                    if (routeIds.indexOf(elem.route_id) === -1) {
-                        startIds.push(elem.starting_station)
-                        endIds.push(elem.finish_station)
-                        routeIds.push(elem.route_id)
-                    }
-                })
+                        const startIds = []
+                        const endIds = []
+                        const routeIds = []
+                        schedules.forEach(elem => {
 
-                // Find the starting and finish stations from the db fetched earlier and match them to the routes
-                const routes = []
-                for (let i = 0; i < routeIds.length; i++) {
-                    routes.push({
-                        starting_station: allStations.find(elem => {
-                        return (elem.station_id === startIds[i])}),
-
-                        finish_station: allStations.find(elem => {
-                           
-                            return (elem.station_id === endIds[i])}),
-
-                            departures: schedules.filter(elem => {
-                               
-                                return (elem.route_id === routeIds[i])
-                            })
+                            if (routeIds.indexOf(elem.route_id) === -1) {
+                                startIds.push(elem.starting_station)
+                                endIds.push(elem.finish_station)
+                                routeIds.push(elem.route_id)
+                            }
                         })
-                  
-                }
-             
-                this.setState({ routes: routes })
+
+                        // Find the starting and finish stations from the db fetched earlier and match them to the routes
+                        const routes = []
+                        for (let i = 0; i < routeIds.length; i++) {
+                            routes.push({
+                                starting_station: allStations.find(elem => {
+                                    return (elem.station_id === startIds[i])
+                                }),
+
+                                finish_station: allStations.find(elem => {
+
+                                    return (elem.station_id === endIds[i])
+                                }),
+
+                                departures: schedules.filter(elem => {
+
+                                    return (elem.route_id === routeIds[i])
+                                })
+                            })
+
+                        }
+
+                        this.setState({ routes: routes })
 
                     })
+                    .then(() => {
+
+                        const liveData = Array(this.state.routes.length)
+                        const liveStatus = []
+                        const newStatus = this.state.routes
+
+                        this.state.routes.forEach((route, i) => {
+                            liveStatus.push(new Promise(function (res, rej) {
+                                res(
+                                    fetch(`http://localhost:3000/api/live/stationtimes/${route.starting_station.station_code}`)
+                                        .then(res => {
+
+                                            if (res.status === 404) return []
+                                            return res.json();
+                                        })
+                                        .then(live => {
+
+
+                                            // liveData.push(
+                                             liveData[i] =   route.departures.map(elem => {
+                                                    const elem2 = live.departures.all.find(status => {
+
+                                                        return (elem.train_uid === status.train_uid)
+                                                    })
+
+
+                                                   return {...elem, ...elem2}
+                                                })
+
+                                        }))
+
+                            }))
+
+                        })
+
+
+                        Promise.all(liveStatus)
+                            .then(result => {
+
+                                console.log(newStatus)
+                                console.log(liveData)
+                                liveData.forEach((data, i) => {
+                                    newStatus[i].departures = data
+                                })
+                                console.log(newStatus)
+                                this.setState({
+                                    routes: newStatus
+                                })
+                            })
+
+
+
+
+
+
+                    })
+
             })
 
     }
@@ -83,7 +142,7 @@ class DepartureBoard extends Component {
 
 
     render() {
-
+        console.log(this.state.routes)
         if (this.state.routes.length > 0) {
 
 

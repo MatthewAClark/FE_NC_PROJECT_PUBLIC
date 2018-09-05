@@ -12,22 +12,22 @@ import fetchUrl from './apiConfig'
 // Load stations state - accessable to all components
 class App extends Component {
   state = {
-    stations: [] 
+    stations: []
   }
 
   // Fetch all stations from backend DB
   componentDidMount() {
     // Display all stations from db on first load
-   
-   
-   fetch(fetchUrl.stations)
+
+
+    fetch(fetchUrl.stations)
       .then(res => {
         return res.json();
       })
       .then(body => {
         this.setState({ stations: body })
       })
-      fetch(fetchUrl.allSchedules)
+    fetch(fetchUrl.allSchedules)
       .then(res => {
         return res.json();
       })
@@ -37,7 +37,21 @@ class App extends Component {
 
   }
 
+  deleteStation = (i) => {
+    fetch(`${fetchUrl.stations}/${this.state.stations[i].station_id}`, {
+      headers: new Headers({ "Content-Type": "application/json" }),
+      method: 'DELETE'
+    })
+      .then(res => res.json()).then(() => {
+        const deleteList = this.state.stations.filter((elem, index) => (index !== i))
+        this.setState({
+          stations: deleteList
+        })
+      })
+      .catch(console.log)
 
+
+  }
   // Update state with new station added
   addToDOMStation = (data) => {
     // if (res.status === 201) {
@@ -75,11 +89,11 @@ class App extends Component {
             <HomePage {...props} stations={this.state.stations} />)} />
 
           <Route exact path="/stations" render={(props) => (
-            <StationManagement {...props} stations={this.state.stations} addToDOMStation={this.addToDOMStation} />)} />
+            <StationManagement {...props} stations={this.state.stations} addToDOMStation={this.addToDOMStation} deleteStation={this.deleteStation} />)} />
 
           <Route path="/stations/:station_id/schedules/" render={(props) => (<Schedules route_id={this.props.route.route_id} station_code={this.state.station.station_code} dest_station_code={this.props.route.station_code} />)} />
 
-                 <Route path="/delays/" render={(props) => (<Delays stations={this.state.stations}/>)} />
+          <Route path="/delays/" render={(props) => (<Delays stations={this.state.stations} />)} />
 
 
 

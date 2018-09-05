@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Schedules from "./schedules";
 import AddRoute from './addRoute';
+import fetchUrl from './apiConfig';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 
@@ -10,7 +11,7 @@ class Station extends Component {
   state = {
     station_id: 0,
     routes: [],
-    station: {station_name:'Frex'},
+    station: {station_name:''},
     editClicked: false
   }
 
@@ -18,7 +19,7 @@ class Station extends Component {
     event.preventDefault();
 
 
-    fetch(`http://localhost:3000/api/db/routes/`, {
+    fetch(fetchUrl.stationRoutes, {
       headers: new Headers({ "Content-Type": "application/json" }),
       method: 'POST',
       body: JSON.stringify({
@@ -44,7 +45,7 @@ class Station extends Component {
         }
 
         const newRoutes = this.state.routes.concat(route)
-        console.log(newRoutes)
+        
 
         this.setState({
           routes: newRoutes
@@ -88,10 +89,26 @@ class Station extends Component {
     })
   }
 
+  deleteRoute = (i) => {
+
+    fetch(`${fetchUrl.stationRoutes}/${this.state.routes[i].route_id}`, {
+      headers: new Headers({ "Content-Type": "application/json" }),
+      method: 'DELETE'
+    })
+      .then(res => res.json()).then(() => {
+        const deleteList = this.state.routes.filter((elem, index) => (index !== i))
+        this.setState({
+          routes: deleteList
+        })
+      })
+      .catch(console.log)
+    
+  }
+
 
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/db/stations/${this.props.match.params.station_id}`)
+    fetch(`${fetchUrl.stations}/${this.props.match.params.station_id}`)
       .then(res => {
         return res.json();
       })
@@ -110,7 +127,7 @@ class Station extends Component {
   // console.log(this.state.station)
 
 
-    fetch(`http://localhost:3000/api/db/routes/start/${this.props.match.params.station_id}`)
+    fetch(`${fetchUrl.stationStart}/${this.props.match.params.station_id}`)
       .then(res => {
         return res.json();
       })
@@ -153,12 +170,17 @@ class Station extends Component {
           return (
             <div key={i}>
               {console.log(route)}
-              <h2 class="title is-3">to {route.station_name}</h2><div>
+              <h2 class="title is-3">to {route.station_name}</h2><div><button onClick = { (event) => {
+
+
+    
+
+this.deleteRoute(i)}}>Delete Route</button>
                 {/* <button>Show times</button> */}
               </div>
 
               {/* <Link to={`/stations/${this.state.station.station_id}/schedules`}>Fetch New Schedules</Link> */}
-              {console.log(route.route_id)}
+              
               <Schedules route_id={route.route_id} station_code={this.state.station.station_code} dest_station_code={route.station_code} />
 
             </div>

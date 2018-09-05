@@ -90,11 +90,19 @@ class StationManagement extends Component {
 
                     {this.props.stations.map((station, i) => {
                         return (
-                            <div  class="tag is-large" key={i}>
+                            <div class="tag is-large" key={i}>
+                            <div  >
                                 <Link to={`/stations/${station.station_id}`}>{station.station_name}</Link>
                                 {/* <StationItem/>          */}
                                 
+                            </div><button onClick = { (event) => {
+
+
+    
+
+this.props.deleteStation(i)}}>Delete Station</button>
                             </div>)
+                            
                     })}
                     <div>
                     <NewStation handleStationName={this.handleStationName} createStation={this.createStation} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton} />

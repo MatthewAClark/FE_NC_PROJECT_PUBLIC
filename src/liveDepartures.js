@@ -59,9 +59,9 @@ class LiveDepartures extends Component {
             const departureUpdate = this.state.departures
             departureUpdate[index].status = liveDeparture.status
             this.setState({departures: departureUpdate})
-            if(liveDeparture.status === 'LATE') {
+            // if(liveDeparture.status === 'LATE') {
 
-            }
+            // }
 
           })
         //  console.log('departure data',depData)

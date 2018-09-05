@@ -48,10 +48,7 @@ createSchedule = (event) => {
       return res.json();
   })
   .then(newSchedules => {
-    console.log(newSchedules)
-//     const newRoutes = this.state.routes.concat(route)
-
-//let updateSchedules = []
+   
 newSchedules = newSchedules.departures.all.filter(newSchedule => {
     return !(this.state.schedules.find(oldSchedule => {
         return (newSchedule.train_uid === oldSchedule.train_uid)
@@ -143,6 +140,29 @@ editButton = (event) => {
     })
 }
 
+deleteSchedule = (i) => {
+
+    fetch(`${fetchUrl.deleteSchedule}/${this.state.schedules[i].train_id}`, {
+      headers: new Headers({ "Content-Type": "application/json" }),
+      method: 'DELETE'
+    })
+       .then(res => res.json()).then(result => {
+           console.log(result)
+const newList = this.state.schedules.map((elem, index) => {
+    if ((index === i)) {
+        elem.newData = true
+    }
+    return elem
+})
+this.setState({
+    schedules: newList
+})
+         })
+       .catch(console.log)
+    console.log(this.state.schedules[i])
+    
+  }
+
 addSchedule = (index) => {
     
     fetch(fetchUrl.postSchedule, {
@@ -183,13 +203,15 @@ addSchedule = (index) => {
                 <td>{schedule.departure_time}</td><td>{schedule.train_arrival_destination}</td><td><button onClick={() => this.addSchedule(i)}>Add Schedule</button></td>
                 </tr>
                 
+                
          
               )
             } else {
                 return (
                 <tr key={i}>
                           
-                <td>{schedule.departure_time}</td><td>{schedule.train_arrival_destination}</td>
+                <td>{schedule.departure_time}</td><td>{schedule.train_arrival_destination}</td><td><button onClick = { (event) => {
+this.deleteSchedule(i)}}>Delete Schedule</button></td>
                 </tr>
                 )
             }
