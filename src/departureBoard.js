@@ -87,7 +87,7 @@ class DepartureBoard extends Component {
                         this.state.routes.forEach((route, i) => {
                             liveStatus.push(new Promise(function (res, rej) {
                                 res(
-                                    fetch(`http://localhost:3000/api/live/stationtimes/${route.starting_station.station_code}`)
+                                    fetch(`${fetchUrl.liveFetchDepBoard}/${route.starting_station.station_code}`)
                                         .then(res => {
 
                                             if (res.status === 404) return []

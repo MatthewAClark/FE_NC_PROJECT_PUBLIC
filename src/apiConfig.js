@@ -1,16 +1,19 @@
-const api_url = 'http://localhost:3000'
+const api_url = process.env.REACT_APP_API_URL
 
 const fetchUrl = { 'stations' : `${api_url}/api/db/stations/`, 
                    'allSchedules' : `${api_url}/api/db/schedules/all`,
+                   'stationRoutes':`${api_url}/api/db/routes/`,
+                   
                 'routes':`${api_url}/api/db/schedules/time/routes`,
-                'liveStation':`${api_url}/api/live/station`,
             'postStation': `${api_url}/api/db/stations/`,
             'route': `${api_url}/api/db/schedules/route/`,
-        'liveRoute': `${api_url}/api/live/station/route/`,
         'postSchedule': `${api_url}/api/db/schedules/`,
         'delaySchedules' : `${api_url}/api/db/delays/schedules`,
-        'stationRoutes':`${api_url}/api/db/routes/`,
+        
         'deleteSchedule': `${api_url}/api/db/schedules`,
-        'stationStart':`${api_url}/api/db/routes/start` }
+        'stationStart':`${api_url}/api/db/routes/start`,
+        'liveStation':`${api_url}/api/live/station`,
+        'liveRoute': `${api_url}/api/live/station/route/`,
+        'liveFetchDepBoard': `${api_url}/api/live/stationtimes` }
 
 export default  fetchUrl
