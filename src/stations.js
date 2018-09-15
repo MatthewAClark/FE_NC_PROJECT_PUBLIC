@@ -17,7 +17,7 @@ class StationManagement extends Component {
 
         // fetch new station from transportAPI
         console.log(process.env.NODE_ENV)
-        console.log(process.env.REACT_APP_API_URL)
+        console.log(process.env)
 console.log('fetching station', fetchUrl.liveStation)
         fetch(`${fetchUrl.liveStation}/${this.state.station_name}`)
             .then(res => {
