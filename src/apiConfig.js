@@ -8,7 +8,7 @@ const fetchUrl = { 'stations' : `${api_url}/api/db/stations/`,
             'postStation': `${api_url}/api/db/stations/`,
             'route': `${api_url}/api/db/schedules/route/`,
         'postSchedule': `${api_url}/api/db/schedules/`,
-        'delaySchedules' : `${api_url}/api/db/delays/schedules`,
+        'delaySchedules' : `${api_url}/api/db/status/schedules`,
         
         'deleteSchedule': `${api_url}/api/db/schedules`,
         'stationStart':`${api_url}/api/db/routes/start`,
