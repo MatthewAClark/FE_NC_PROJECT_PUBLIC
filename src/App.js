@@ -24,9 +24,11 @@ class App extends Component {
       .then(res => {
         return res.json();
       })
+      .catch(err => console.log(err))
       .then(body => {
         this.setState({ stations: body })
       })
+      .catch(err => {throw err})
     fetch(fetchUrl.allSchedules)
       .then(res => {
         return res.json();

@@ -34,7 +34,7 @@ class LiveDepartures extends Component {
     fetch(`http://localhost:3000/api/db/departures/all/${this.props.station_id}/?departure_time_from=${hours}:${minutes}&departure_time_to=${hours_limit}:${minutes}`)
 
       .then(res => {
-        console.log('test', res.status)
+        
         if (res.status === 404) return []
         return res.json();
       })
@@ -43,13 +43,13 @@ class LiveDepartures extends Component {
         
         fetch(`http://localhost:3000/api/live/stationtimes/${this.props.station_code}`)
         .then(res => {
-          console.log('test', res.status)
+          
           if (res.status === 404) return []
           return res.json();
         })
         .then(live => {
           this.setState({ departures: body })
-          console.log(live)
+          
           // loop through departures
           body.forEach( (dep, index) => {
             const liveDeparture = live.departures.all.find(status => {

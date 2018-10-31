@@ -29,6 +29,7 @@ class DepartureBoard extends Component {
 
         fetch(`${fetchUrl.routes}/?from=${hours}:${minutes}&to=${hours_limit}:${minutes}`)
             .then(res => {
+                
                 return res.json();
             })
             .then(schedules => {
