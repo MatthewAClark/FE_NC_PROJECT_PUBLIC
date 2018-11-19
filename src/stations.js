@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import NewStation from './newStation';
 
+
 import fetchUrl from './apiConfig';
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import StationItems from "./stationItems";
 
 //const StationManagement = (props) => {
 class StationManagement extends Component {
@@ -16,6 +18,7 @@ class StationManagement extends Component {
 
 
         // fetch new station from transportAPI
+        console.log(fetchUrl.liveStation, this.state.station_name)
         fetch(`${fetchUrl.liveStation}/${this.state.station_name}`)
             .then(res => {
                 return res.json();
@@ -81,28 +84,13 @@ class StationManagement extends Component {
 
     render() {
         return (
-           
                 <div class="card">
                     <h1 class="title is-2">Station Management</h1>
                     <h3 class="title is-3">Stations</h3>
                 
+                <StationItems stations={this.props.stations} deleteStation={this.props.deleteStation}/>
 
-                    {this.props.stations.map((station, i) => {
-                        return (
-                            <div class="tag is-large" key={i}>
-                            <div  >
-                                <Link to={`/stations/${station.station_id}`}>{station.station_name}</Link>
-                                {/* <StationItem/>          */}
-                                
-                            </div><button onClick = { (event) => {
-
-
-    
-
-this.props.deleteStation(i)}}>Delete Station</button>
-                            </div>)
-                            
-                    })}
+                       
                     <div>
                     <NewStation handleStationName={this.handleStationName} createStation={this.createStation} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton} />
 </div>

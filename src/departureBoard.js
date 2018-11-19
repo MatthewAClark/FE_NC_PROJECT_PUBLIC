@@ -143,7 +143,7 @@ class DepartureBoard extends Component {
 
 
     render() {
-        console.log(this.state.routes)
+     //   console.log(this.state.routes)
         if (this.state.routes.length > 0) {
 
 
@@ -164,7 +164,8 @@ class DepartureBoard extends Component {
             )
 
         } else
-            return (<div>No times have been set</div>)
+            return (<div>
+                <p>No train schedules have been currently set up that are due to depart at this time of day</p></div>)
 
 
     }

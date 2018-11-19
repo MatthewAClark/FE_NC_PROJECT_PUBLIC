@@ -6,6 +6,7 @@ class HomePage extends Component {
         return (
             <div className="panel">
          <DepartureBoard stations={this.props.stations}/>
+         <p>To add new schedules, select the 'Station Management' tab and follow the instructions</p>
         </div>
         ) 
     }
