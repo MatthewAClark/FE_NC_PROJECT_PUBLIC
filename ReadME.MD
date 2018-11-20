@@ -9,14 +9,16 @@ These instructions will get you a copy of the project up and running on your loc
 ## Installing
 For development, you will also need to install and run the back end server for this project. This project is available here
 
-<back end app>
+```
+https://github.com/MatthewAClark/BE_NC_PROJECT_PUBLIC
+```
 
 Please follow the ReadMe.MD file provided with the project for instructions on installation
 
 ## Github
 Using the terminal, clone the repo from GitHub
 ```
-git clone https://github.com/MatthewAClark/FE-PT-northcoders-news.git
+git clone https://github.com/MatthewAClark/FE_NC_PROJECT_PUBLIC.git
 ```
 ## Node Setup
 Change into the working directory
@@ -43,12 +45,18 @@ Please note: You will need the Back End server application to be running before 
 
 ## Deployment
 This project is online at Heroku
-<heroku link>
+```
+https://personal-train-app-nc-project.herokuapp.com/
+```
 The backend web server for this App is also on Heroku
 
+```
+https://aqueous-shelf-21128.herokuapp.com/
+```
 
-For instructions on API endpoints, please see the Readme.MD file in
+For instructions on API endpoints you can visit:
+```
+https://aqueous-shelf-21128.herokuapp.com/api
+```
 
-
-In production mode,
 
