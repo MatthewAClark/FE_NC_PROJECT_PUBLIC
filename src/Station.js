@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Schedules from "./schedules";
 import AddRoute from './addRoute';
 import fetchUrl from './apiConfig';
+import RouteItems from './RouteItems';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 
@@ -153,39 +154,13 @@ class Station extends Component {
     return (
       <div>
         <h1 class="title is-2">{this.state.station.station_name}</h1>
-        {/* <table>
-          <tbody>
-            <tr>
-              <td>station Id</td><td>Station Name</td><td>Station code</td><td>station user type</td>
-            </tr>
-            <tr>
-              <td>{this.state.station.station_id}</td><td>{this.state.station.station_name}</td><td>{this.state.station.station_code}</td><td>{this.state.station.user_station_type}</td>
-            </tr>
-          </tbody>
-        </table> */}
+   
+
+<RouteItems routes={this.state.routes} deleteRoute={this.deleteRoute} station_code={this.state.station.station_code}/>.
 
 
 
-        {this.state.routes.map((route, i) => {
-          return (
-            <div key={i}>
-              {console.log(route)}
-              <h2 class="title is-3">to {route.station_name}</h2><div><button onClick = { (event) => {
-
-
-    
-
-this.deleteRoute(i)}}>Delete Route</button>
-                {/* <button>Show times</button> */}
-              </div>
-
-              {/* <Link to={`/stations/${this.state.station.station_id}/schedules`}>Fetch New Schedules</Link> */}
-              
-              <Schedules route_id={route.route_id} station_code={this.state.station.station_code} dest_station_code={route.station_code} />
-
-            </div>
-          )
-        })}
+        
         <AddRoute stations={this.props.stations} currentStation={this.state.station.station_id} handleStationId={this.handleStationId} createRoute={this.createRoute} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton} />
 
       </div>

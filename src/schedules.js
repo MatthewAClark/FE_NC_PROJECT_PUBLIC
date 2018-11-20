@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import AddNewTimes from "./addNewTimes";
+import ScheduleItems from "./ScheduleItems";
 import fetchUrl from "./apiConfig";
 
 class Schedules extends Component {
@@ -195,32 +196,13 @@ addSchedule = (index) => {
             <div style={{display:'flex', flexFlow: 'row wrap'}}> 
             <table class="table">
                    <tbody>
-            {this.state.schedules.map((schedule, i) => {
-                if(schedule.newData === true) {
-              return (
-                       <tr key={i}>
-                          
-                <td>{schedule.departure_time}</td><td>{schedule.train_arrival_destination}</td><td><button onClick={() => this.addSchedule(i)}>Add Schedule</button></td>
-                </tr>
-                
-                
-         
-              )
-            } else {
-                return (
-                <tr key={i}>
-                          
-                <td>{schedule.departure_time}</td><td>{schedule.train_arrival_destination}</td><td><button onClick = { (event) => {
-this.deleteSchedule(i)}}>Delete Schedule</button></td>
-                </tr>
-                )
-            }
-
-            })}
+                       <ScheduleItems schedules={this.state.schedules} deleteSchedule={this.deleteSchedule} addSchedule={this.addSchedule}/>
+            
 
             </tbody>
                 </table>
             <AddNewTimes handleDate={this.handleDate} handleFromDepartureTime={this.handleFromDepartureTime} handleToDepartureTime={this.handleToDepartureTime} createSchedule={this.createSchedule} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton}/>
+            
             </div>
         )
     }

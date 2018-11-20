@@ -94,6 +94,7 @@ class StationManagement extends Component {
                     <div>
                     <NewStation handleStationName={this.handleStationName} createStation={this.createStation} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton} />
 </div>
+<p>This is a list of railway stations that have been set up and two or more stations are required in order to set a route between them. To set a route, select a station and this will present you with further options for the routes.</p>
                 </div>
            
         )
