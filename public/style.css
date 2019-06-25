@@ -7,6 +7,30 @@ table {
     width: 100%;
 } */
 
-.departureItem {
+/* .departureItem {
     background-color: lightblue;
+} */
+
+html {
+    height: 100%;
+}
+
+body {
+    background-image: url("images/train.png");
+    height: 100%;
+}
+
+
+
+.home {
+    padding:  5%;
+}
+
+.jumbotron {
+    /* padding: 10%; */
+    opacity: 0.8;
+}
+
+.liveTime {
+    text-align: center;
 }

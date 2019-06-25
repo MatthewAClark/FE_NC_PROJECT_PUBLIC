@@ -71,18 +71,21 @@ class App extends Component {
           <header>
 
             {/* Navbar section */}
-            <section className="hero is-primary">
-              <div className="hero-body">
-                <div className="container">
-                  <h1 className="title">Personal Train App</h1>
-                  <nav className="navbar">
-                    <Link className="navbar-item" to="/">Home</Link>
-                    <Link className="navbar-item" to="/stations">Station Management</Link>
-                    <Link className="navbar-item" to="/delays">Train Performance</Link>
+           
+            <section className="is-dark">
+            
+             
+                  
+                  <nav className="navbar bg-dark">
+                  <div className="container">
+                    <Link className="navbar-item bg-dark text-white" to="/">Home</Link>
+                    <Link className="navbar-item bg-dark text-white" to="/stations">Station Management</Link>
+                    <Link className="navbar-item bg-dark text-white" to="/delays">Train Performance</Link>
+                    </div>
                   </nav>
-                </div>
-              </div>
+                  
             </section>
+           
           </header>
 
           {/*Home page which displays departures*/}
@@ -102,8 +105,11 @@ class App extends Component {
           <Route exact path="/stations/:station_id" render={(props) => (
             <Station {...props} stations={this.state.stations} />)} />
 
+<footer className="bg-dark"></footer>
         </div>
+       
       </ BrowserRouter>
+      
     );
   }
 }

@@ -148,19 +148,27 @@ class DepartureBoard extends Component {
 
 
             return (
-                <div class="">
-                    <h2 class="title is-2">Departures</h2>
+                <table className="table bg-dark text-white">
+                    <tbody>
                     {this.state.routes.map((route, i) => {
 
-                        return (
-                            <div key={i}>
+return (
 
-                                <DepartureItem route={route} />
-                            </div>
-                        )
-                    })}
 
-                </div>
+    
+    // <table className="table" key={i}>
+
+        <DepartureItem route={route} key={i}/>
+    // </table>
+)
+})}
+                    </tbody>
+
+
+                   
+             
+
+                </table>
             )
 
         } else

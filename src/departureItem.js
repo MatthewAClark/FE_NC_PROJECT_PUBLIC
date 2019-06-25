@@ -6,32 +6,67 @@ const DepartureItem = (props) => {
 
   //  render() {
             return (
-                <div class="card departureItem">
- 
-                    <h4 class="title is-4">{props.route.starting_station.station_name} to {props.route.finish_station.station_name}</h4>
 
-                     <div class="card">
-                    <table class="table">
+                
 
-                        <tbody>
-                            <tr>
-                                <td>Departure time</td><td>Train Destination</td><td>Status</td>
-                            </tr>
-                    {props.route.departures.map((departure, i) => {
-                        return (
+            
+                    <tr>
+                    <td>{props.route.starting_station.station_name} to {props.route.finish_station.station_name}</td>
+                   
+                    
+                    
+                    
+
+                   
+
+{props.route.departures.map((departure, i) => {
+    if (departure.status != "LATE") {
+        
+        return (
                             
                            
                                 
-                                <tr key={i}>
-                                        <td>{departure.departure_time}</td><td>{departure.train_arrival_destination}</td><td>{departure.status}</td>
-                                    </tr>
+            <td clasName="liveTime" key={i}>
+                    {departure.expected_departure_time}
+
+                    {/* <td>{departure.train_arrival_destination}</td><td></td> */}
+                </td>
+            
+            )
+    }
+
+    if (departure.status == "LATE") {
+        
+        return (
+                            
+                           
                                 
-                                )
+            <td className="bg-danger text-white" key={i}>
+                    <i class="fas fa-exclamation-triangle"></i> {departure.expected_departure_time}
+
+                    {/* <td>{departure.train_arrival_destination}</td><td></td> */}
+                </td>
+            
+            )
+    }
+
+    if (departure.status == "CANCELLED") {
+        return (
+                            
+                           
+                                
+            <td className="text-danger" key={i}>
+                    CANCELLED
+
+                    {/* <td>{departure.train_arrival_destination}</td><td></td> */}
+                </td>
+            
+            )
+    }
+                       
                     })}
-                    </tbody>
-                    </table>
-                </div>
-                            </div>
+                    
+                            </tr>
                 
             )
    
