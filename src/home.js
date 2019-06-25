@@ -12,7 +12,7 @@ class HomePage extends Component {
         // </div>
 
         <div className="container home">
-<div className="jumbotron bg-dark text-white">
+<div className="jumbotron opacity bg-dark text-white">
   <h1 className="display-4">Live Departures</h1>
   {/* <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p> */}
   <hr className="my-4"/>

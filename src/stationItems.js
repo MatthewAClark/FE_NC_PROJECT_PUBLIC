@@ -10,15 +10,12 @@ const StationItems = (props) => {
         return (
             props.stations.map((station, i) => {
                 return (
-                    <div class="tag is-large" key={i}>
-                        <div  >
-                            <Link to={`/stations/${station.station_id}`}>{station.station_name}</Link>
+                    <div class="row mt-2 justify-content-md-center is-large" key={i}>
+                        
+                            <Link className="col-2 text-white" to={`/stations/${station.station_id}`}>{station.station_name}</Link>
 
 
-                        </div><button onClick={(event) => {
-
-
-
+                        <button className="col-2 " onClick={(event) => {
 
                             props.deleteStation(i)
                         }}>Delete Station</button>

@@ -20,13 +20,16 @@ body {
     height: 100%;
 }
 
+.centre {
+    margin:auto;
+}
 
 
 .home {
     padding:  5%;
 }
 
-.jumbotron {
+.opacity {
     /* padding: 10%; */
     opacity: 0.8;
 }
