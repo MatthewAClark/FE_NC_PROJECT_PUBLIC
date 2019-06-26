@@ -152,17 +152,26 @@ class Station extends Component {
      
      
     return (
-      <div>
-        <h1 class="title is-2">{this.state.station.station_name}</h1>
+      <div className="container">
+        <div className="card bg-dark opacity mt-5 p-2 scheduleCard mb-5">
+        <div className="row">
+          
+        <h1 className="col-10 title is-2 text-white">{this.state.station.station_name}</h1>
+       
+        <AddRoute className="col-1" stations={this.props.stations} currentStation={this.state.station.station_id} handleStationId={this.handleStationId} createRoute={this.createRoute} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton} />
+        </div>
+       
    
 
-<RouteItems routes={this.state.routes} deleteRoute={this.deleteRoute} station_code={this.state.station.station_code}/>.
-
-
-
-        
-        <AddRoute stations={this.props.stations} currentStation={this.state.station.station_id} handleStationId={this.handleStationId} createRoute={this.createRoute} buttonClicked={this.state.buttonClicked} toggleButton={this.toggleButton} />
-
+   <RouteItems routes={this.state.routes} deleteRoute={this.deleteRoute} station_code={this.state.station.station_code}/>.
+   
+   
+   
+           
+          
+   
+        </div>
+       
       </div>
     )
   }

@@ -86,8 +86,8 @@ class StationManagement extends Component {
         return (
             <div className="container home">
  <div className="card pl-3 pt-3 pb-3 pr-3 opacity bg-dark">
-                    <h1 class="title is-2  text-white">Station Management</h1>
-                    <h3 class="title is-3  text-white">Stations</h3>
+                    <h1 className="title is-2  text-white">Station Management</h1>
+                    <h3 className="title is-3  text-white">Stations</h3>
                 
                 <StationItems stations={this.props.stations} deleteStation={this.props.deleteStation}/>
 

@@ -10,7 +10,7 @@ const StationItems = (props) => {
         return (
             props.stations.map((station, i) => {
                 return (
-                    <div class="row mt-2 justify-content-md-center is-large" key={i}>
+                    <div className="row mt-2 justify-content-md-center is-large" key={i}>
                         
                             <Link className="col-2 text-white" to={`/stations/${station.station_id}`}>{station.station_name}</Link>
 

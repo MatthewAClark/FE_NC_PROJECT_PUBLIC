@@ -14,7 +14,7 @@ const ScheduleItems = (props) => {
               return (
                        <tr key={i}>
                           
-                <td>{schedule.departure_time}</td><td>{schedule.train_arrival_destination}</td><td><button onClick={() => props.addSchedule(i)}>Add Schedule</button></td>
+                <td>{schedule.departure_time}</td><td>{schedule.train_arrival_destination}</td><td><button className="button" onClick={() => props.addSchedule(i)}>Add Schedule</button></td>
                 </tr>
                 
                 
@@ -24,20 +24,25 @@ const ScheduleItems = (props) => {
                 return (
                 <tr key={i}>
                           
-                <td>{schedule.departure_time}</td><td>{schedule.train_arrival_destination}</td><td><button onClick = { (event) => {
+                <td>{schedule.departure_time}</td><td>{schedule.train_arrival_destination}</td><td><button className="button" onClick = { (event) => {
 props.deleteSchedule(i)}}>Delete Schedule</button></td>
                 </tr>
                 )
             }
 
             }))
-    } else {
-        return (<div>
-            <p>No schedules found for this route. To add schedules, select 'New Times' and fill in the following: </p>
+        
+     } else {
+        
+        return (<tr><td>
+<p>No schedules found for this route. To add schedules, select 'New Times' and fill in the following: </p>
             <p>Departure time - the times from when trains depart at this station</p>
             <p>Offset - How many hours:minutes ahead to look</p>
             <p>Date - The date at which to look</p>
-        </div>)
+        </td>
+        </tr>
+            
+        )
     }
 }
 

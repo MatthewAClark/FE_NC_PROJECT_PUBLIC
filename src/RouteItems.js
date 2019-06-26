@@ -11,15 +11,15 @@ const RouteItems = (props) => {
         return (
             props.routes.map((route, i) => {
                 return (
-                    <div key={i}>
-                        {console.log(route)}
-                        <h2 class="title is-3">to {route.station_name}</h2><div><button onClick={(event) => {
+                    <div className="" key={i}>
+                        <div className="row">
+                            <h2 className="col-10 title is-3 text-white">to {route.station_name}</h2><button className="col-2 button" onClick={(event) => {
+
+                                this.deleteRoute(i)
+                            }}>Delete Route</button>
+                            
 
 
-
-
-                            this.deleteRoute(i)
-                        }}>Delete Route</button>
                             {/* <button>Show times</button> */}
                         </div>
 

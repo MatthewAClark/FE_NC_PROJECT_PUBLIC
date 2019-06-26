@@ -28,7 +28,7 @@ const NewRoute = (props) => {
         </form>
         )
     } else {
-        return <button onClick = {props.toggleButton}>New Route</button>
+        return <button className="button" onClick = {props.toggleButton}>New Route</button>
     }
 }
 
